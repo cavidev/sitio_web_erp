@@ -1,0 +1,39 @@
+|
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sitio ERP -Examen Web</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <link rel="stylesheet" href="assets/css/masterPage.css">
+
+</head>
+
+<body ng-app="sitioerp">
+
+    <div ng-include="'app/layout/navbar.html'"></div>
+    <div ng-include="'app/layout/sidebar.html'"></div>
+    <div class="sectionContent">
+        <div class="container" ng-view></div>
+    </div>
+
+    <script type="text/javascript" src="./node_modules/angular/angular.js"></script>
+    <script type="text/javascript" src="./node_modules/angular/angular-route.js"></script>
+
+    <script type="text/javascript" src="./app.js"></script>
+
+    <script type="text/javascript" src="./app/request-service.js"></script>
+
+    <script type="text/javascript" src="./app/clients/controller/clients.js"></script>
+    <script type="text/javascript" src="./app/products/controller/products.js"></script>
+
+</body>
+
+</html>
