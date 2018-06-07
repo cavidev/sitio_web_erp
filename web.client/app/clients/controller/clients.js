@@ -33,7 +33,7 @@ var app = angular.module("sitioerp")
                 data: pClient
             };
 
-            requestService.putRequest(data, {
+            requestService.postRequest(data, {
                 url: 'clients'
             }).then(function (res) {
                 if (!res.success) {
@@ -72,7 +72,20 @@ var app = angular.module("sitioerp")
             })
         }
 
-
+        vm.update = function update() {
+            requestService.getRequest({
+                params: '',
+                data: ''
+            }, {
+                url: 'clients'
+            }).then(function (res) {
+                if (!res.success) {
+                    alert('No se pudieron recuperar los datos.');
+                    return;
+                }
+                vm.allClients = res.data;
+            })
+        };
 
 
 

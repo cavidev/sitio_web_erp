@@ -20,7 +20,7 @@ app.use('/', express.static(__dirname + '/../web.client'));
 //Inicio de las direcciones. Endpoints!
 
 app.get('/clients', clients.clientsGet);
-app.put('/clients', clients.clientsInsert);
+app.post('/clients', clients.clientsInsert);
 app.delete('/clients/:idCard', clients.clientsDelete);
 
 
