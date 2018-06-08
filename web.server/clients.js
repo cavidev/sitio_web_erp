@@ -29,3 +29,13 @@ exports.clientsDelete = function clientsDelete(req, res) {
         res.send(documents);
     });
 }
+
+exports.clientsUpdate = function clientsUpdate(req, res) {
+    var data = {
+        collection: 'clients',
+        query: req.body
+    };
+    mongoDB.deleteDocument(data, function (documents) {
+        res.send(documents);
+    });
+}

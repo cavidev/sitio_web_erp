@@ -1,29 +1,42 @@
 var app = angular.module("sitioerp")
-    .controller('ProductsCtrl', function ($scope, requestService) {
+    .controller('InventoryCtrl', function ($scope, requestService) {
         var vm = this;
         vm.get = function get() {
             requestService.getRequest({
                 params: '',
                 data: ''
             }, {
-                url: 'products'
+                url: 'inventories'
             }).then(function (res) {
                 // TODO: Cambiar cuando se recuperen los datos.
                 if (!res.success) {
                     alert('No se pudieron recuperar los datos.');
                     // return;
                 }
-                vm.allProducts = [{
-                    id: '1',
-                    name: 'Pera',
-                    price: 4009,
-                    tax: 506
-                }, {
-                    id: '2',
-                    name: 'Sadia',
-                    price: 2009,
-                    tax: 256
-                }];
+                vm.allInventory = [{
+                        id: '1',
+                        name: 'Pera',
+                        quantity: 300,
+                        quantityMin: 2,
+                        quantityMax: 500,
+                        detail: 'Gravado'
+                    }, {
+                        id: '2',
+                        name: 'Sadia',
+                        quantity: 200,
+                        quantityMin: 10,
+                        quantityMax: 450,
+                        detail: 'Excento'
+                    },
+                    {
+                        id: '3',
+                        name: 'Banano',
+                        quantity: 200,
+                        quantityMin: 10,
+                        quantityMax: 450,
+                        detail: 'Gravado'
+                    }
+                ];
             })
         };
         vm.get();
@@ -40,32 +53,28 @@ var app = angular.module("sitioerp")
             };
 
             requestService.postRequest(data, {
-                url: 'products'
+                url: 'inventories'
             }).then(function (res) {
                 if (!res.success) {
                     alert('No se pudieron insertar los datos');
                     // return;
                 }
                 vm.get();
-                vm.product = {
-                    id: undefined,
-                    name: undefined,
-                    tax: undefined
-                }
+                vm.clearV();
             })
         }
 
-        vm.delete = function deleteN(pIdProduct) {
-            console.log(pIdProduct);
+        vm.delete = function deleteN(pIdInventory) {
+            console.log(pIdInventory);
             if (!confirm('Seguro de realizar esta acción?')) {
                 return;
             }
             var data = {
-                params: pIdProduct,
+                params: pIdInventory,
                 data: ''
             };
             requestService.deleteRequest(data, {
-                url: 'products/'
+                url: 'inventories/'
             }).then(function (res) {
                 if (!res.success) {
                     alert('No se pudieron eliminar los datos');
@@ -76,12 +85,12 @@ var app = angular.module("sitioerp")
         }
 
         vm.update = function update(pProduct) {
-            console.log(pProduct)
+            console.log(pProduct);
             requestService.putRequest({
                 params: '',
                 data: pProduct
             }, {
-                url: 'products'
+                url: 'inventories'
             }).then(function (res) {
                 if (!res.success) {
                     alert('No se pudieron recuperar los datos.');
@@ -95,8 +104,10 @@ var app = angular.module("sitioerp")
             vm.product = {
                 id: pProduct.id,
                 name: pProduct.name,
-                price: pProduct.price,
-                tax: pProduct.tax
+                quantity: pProduct.quantity,
+                quantityMin: pProduct.quantityMin,
+                quantityMax: pProduct.quantityMax,
+                detail: pProduct.detail
             };
         };
 
@@ -104,7 +115,10 @@ var app = angular.module("sitioerp")
             vm.product = {
                 id: undefined,
                 name: undefined,
-                tax: undefined
-            }
+                quantity: undefined,
+                quantityMin: undefined,
+                quantityMax: undefined,
+                detail: undefined
+            };
         };
     });

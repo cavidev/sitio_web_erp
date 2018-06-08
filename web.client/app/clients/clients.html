@@ -1,68 +1,53 @@
 <br>
 <div class="row clearfix">
-    <div class="col-md-8">
-        <div class="card">
-            <h5 class="card-header">Agregar Cliente</h5>
-            <div class="card-body">
-                <form class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Nombre</label>
-                            <input type="text" class="form-control" ng-model="clients.client.name" placeholder="Nombre del cliente">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <label>Cédula</label>
-                            <input type="text" class="form-control" ng-model="clients.client.idCard" placeholder="ejemplo: 101110111">
-                        </div>
-                    </div>
-                    <div class="col-md-3 offset-md-1">
-                        <button type="submit" class="btn btn-primary" ng-click="clients.add(clients.client)">Agregar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card">
-            <h5 class="card-header">Eliminar Cliente</h5>
-            <div class="card-body">
-                <form class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Cédula</label>
-                            <input type="text" class="form-control" ng-model="clients.idCard" placeholder="Nombre del cliente">
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-danger" ng-click="clients.delete(clients.idCard)">Eliminar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-<div class="row clearfix">
     <div class="col-md-12">
         <div class="card">
             <h5 class="card-header">Lista de clientes</h5>
             <div class="card-body">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Cédula</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="customer in clients.allClients">
-                            <td>{{customer.name}}</td>
-                            <td>{{customer.idCard}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Cédula</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.name" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.idCard" placeholder="ejemplo: 101110111">
+                                            <small id="emailHelp" class="form-text text-muted">Si esta modificando no cambie la cédula</small>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-success" ng-click="clients.add(clients.client)">Agregar</button>
+                                            <button type="button" class="btn btn-warning" ng-click="clients.update(clients.client)">Modificar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="customer in clients.allClients">
+                                    <td>{{customer.name}}</td>
+                                    <td>{{customer.idCard}}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-danger" ng-click="clients.delete(customer.idCard)">Eliminar</button>
+                                            <button type="button" class="btn btn-secondary" ng-click="clients.select(customer)">Seleccionar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

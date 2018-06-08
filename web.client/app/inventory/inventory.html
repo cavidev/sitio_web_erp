@@ -1,0 +1,78 @@
+<br>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="card-header">Inventario</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Producto (id)</th>
+                                    <th scope="col">Cantidad</th>
+                                    <th scope="col">Cantidad Min</th>
+                                    <th scope="col">Cantidad Max</th>
+                                    <th scope="col">Grabado o Excento</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="inventory.product.id" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="inventory.product.quantity" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="inventory.product.quantityMin" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="inventory.product.quantityMax" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="inventory.product.detail" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-success" ng-click="inventory.add(inventory.product)">Agregar</button>
+                                            <button type="button" class="btn btn-warning" ng-click="inventory.update(inventory.product)">Modificar</button>
+                                            <button type="button" class="btn btn-light" ng-click="inventory.product.clearV()">Limpiar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="product in inventory.allInventory">
+                                    <td>{{product.id}}</td>
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.quantity}}</td>
+                                    <td>{{product.quantityMin}}</td>
+                                    <td>{{product.quantityMax}}</td>
+                                    <td>{{product.detail}}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-danger" ng-click="inventory.delete(product.id)">Eliminar</button>
+                                            <button type="button" class="btn btn-secondary" ng-click="inventory.select(product)">Seleccionar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

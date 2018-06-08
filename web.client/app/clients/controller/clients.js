@@ -1,7 +1,10 @@
 var app = angular.module("sitioerp")
     .controller('ClientsCtrl', function ($scope, requestService) {
         var vm = this;
-
+        vm.client = {
+            name: '',
+            idCard: ''
+        }
         /**
          * Recupera la información de los clientes.
          *
@@ -13,11 +16,17 @@ var app = angular.module("sitioerp")
             }, {
                 url: 'clients'
             }).then(function (res) {
-                if (!res.success) {
+                /*if (!res.success) {
                     alert('No se pudieron recuperar los datos.');
                     return;
-                }
-                vm.allClients = res.data;
+                }*/
+                vm.allClients = [{
+                    name: 'Carlos',
+                    idCard: '504080112'
+                }, {
+                    name: 'Esteban',
+                    idCard: '206780934'
+                }] //res.data;
             })
         };
         vm.get();
@@ -28,6 +37,11 @@ var app = angular.module("sitioerp")
          * @param {*} pClient información del cliente.
          */
         vm.add = function add(pClient) {
+            console.log(pClient);
+            if (pClient === undefined) {
+                alert('Datos inconsostentes');
+                return;
+            }
             var data = {
                 params: '',
                 data: pClient
@@ -72,8 +86,9 @@ var app = angular.module("sitioerp")
             })
         }
 
-        vm.update = function update() {
-            requestService.getRequest({
+        vm.update = function update(pClient) {
+            console.log(pClient);
+            requestService.putRequest({
                 params: '',
                 data: ''
             }, {
@@ -87,6 +102,10 @@ var app = angular.module("sitioerp")
             })
         };
 
-
-
+        vm.select = function select(pClient) {
+            vm.client = {
+                name: pClient.name,
+                idCard: pClient.idCard
+            };
+        }
     });

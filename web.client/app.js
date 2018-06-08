@@ -8,6 +8,14 @@ sitioErp.config(function ($routeProvider) {
         })
         .when('/productos', {
             templateUrl: 'app/products/products.html',
-            controller: 'ProductsCtrl'
+            controller: 'ProductsCtrl as products'
+        })
+        .when('/inventario', {
+            templateUrl: 'app/inventory/inventory.html',
+            controller: 'InventoryCtrl as inventory'
+        })
+        .when('/facturacion', {
+            templateUrl: 'app/invoice/invoice.html',
+            controller: 'InvoiceCtrl as invoice'
         });
 });

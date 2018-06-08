@@ -1,3 +1,64 @@
-<div>
-    sdasdfsd
+<br>
+<div class="row clearfix">
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="card-header">Lista de productos</h5>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">id</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Impuesto</th>
+                                    <th scope="col">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.name" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.price" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.tax" placeholder="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-success" ng-click="products.add(products.product)">Agregar</button>
+                                            <button type="button" class="btn btn-warning" ng-click="products.update(products.product)">Modificar</button>
+                                            <button type="button" class="btn btn-light" ng-click="products.clearV()">Limpiar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="product in products.allProducts">
+                                    <td>{{product.id}}</td>
+                                    <td>{{product.name}}</td>
+                                    <td>{{product.price}}</td>
+                                    <td>{{product.tax}}</td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-danger" ng-click="products.delete(product.id)">Eliminar</button>
+                                            <button type="button" class="btn btn-secondary" ng-click="products.select(product)">Seleccionar</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
