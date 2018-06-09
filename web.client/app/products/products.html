@@ -21,17 +21,17 @@
                                     <td>#</td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.name" placeholder="">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.nombre" placeholder="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.price" placeholder="">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.precio" placeholder="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.tax" placeholder="">
+                                            <input type="text" class="form-control form-control-sm" ng-model="products.product.impuesto" placeholder="">
                                         </div>
                                     </td>
                                     <td>
@@ -44,9 +44,9 @@
                                 </tr>
                                 <tr ng-repeat="product in products.allProducts">
                                     <td>{{product.id}}</td>
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.price}}</td>
-                                    <td>{{product.tax}}</td>
+                                    <td>{{product.nombre}}</td>
+                                    <td>{{product.precio}}</td>
+                                    <td>{{product.impuesto}}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
                                             <button type="button" class="btn btn-danger" ng-click="products.delete(product.id)">Eliminar</button>

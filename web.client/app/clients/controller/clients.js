@@ -2,8 +2,8 @@ var app = angular.module("sitioerp")
     .controller('ClientsCtrl', function ($scope, requestService) {
         var vm = this;
         vm.client = {
-            name: '',
-            idCard: ''
+            nombre: '',
+            cedula: ''
         }
         /**
          * Recupera la información de los clientes.
@@ -14,20 +14,15 @@ var app = angular.module("sitioerp")
                 params: '',
                 data: ''
             }, {
-                url: 'clients'
-            }).then(function (res) {
-                /*if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
-                    return;
-                }*/
-                vm.allClients = [{
-                    name: 'Carlos',
-                    idCard: '504080112'
-                }, {
-                    name: 'Esteban',
-                    idCard: '206780934'
-                }] //res.data;
-            })
+                    url: 'clients'
+                }).then(function (res) {
+
+                    /*if (!res.success) {
+                        alert('No se pudieron recuperar los datos.');
+                        return;
+                    }*/
+                    vm.allClients = res.data;
+                })
         };
         vm.get();
 
@@ -50,14 +45,15 @@ var app = angular.module("sitioerp")
             requestService.postRequest(data, {
                 url: 'clients'
             }).then(function (res) {
+                console.log(res)
                 if (!res.success) {
-                    alert('No se pudieron insertar los datos');
+                    alert(res.message);
                     return;
                 }
                 vm.get();
                 vm.client = {
-                    name: '',
-                    idCard: ''
+                    nombre: '',
+                    cedula: ''
                 }
             })
         }
@@ -67,19 +63,19 @@ var app = angular.module("sitioerp")
          *
          * @param {*} pClient información del cliente.
          */
-        vm.delete = function deleteN(pIdCard) {
+        vm.delete = function deleteN(pcedula) {
             if (!confirm('Seguro de realizar esta acción?')) {
                 return;
             }
             var data = {
-                params: pIdCard,
+                params: pcedula,
                 data: ''
             };
             requestService.deleteRequest(data, {
                 url: 'clients/'
             }).then(function (res) {
                 if (!res.success) {
-                    alert('No se pudieron eliminar los datos');
+                    alert(res.message);
                     return;
                 }
                 vm.get();
@@ -90,22 +86,22 @@ var app = angular.module("sitioerp")
             console.log(pClient);
             requestService.putRequest({
                 params: '',
-                data: ''
+                data: pClient
             }, {
-                url: 'clients'
-            }).then(function (res) {
-                if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
-                    return;
-                }
-                vm.allClients = res.data;
-            })
+                    url: 'clients'
+                }).then(function (res) {
+                    if (!res.success) {
+                        alert(res.message);
+                        return;
+                    }
+                    vm.get();
+                })
         };
 
         vm.select = function select(pClient) {
             vm.client = {
-                name: pClient.name,
-                idCard: pClient.idCard
+                nombre: pClient.nombre,
+                cedula: pClient.cedula
             };
         }
     });

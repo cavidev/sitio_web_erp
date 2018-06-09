@@ -6,32 +6,36 @@ var app = angular.module("sitioerp")
                 params: '',
                 data: ''
             }, {
-                url: 'products'
-            }).then(function (res) {
-                // TODO: Cambiar cuando se recuperen los datos.
-                if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
-                    // return;
-                }
-                vm.allProducts = [{
-                    id: '1',
-                    name: 'Pera',
-                    price: 4009,
-                    tax: 506
-                }, {
-                    id: '2',
-                    name: 'Sadia',
-                    price: 2009,
-                    tax: 256
-                }];
-            })
+                    url: 'products'
+                }).then(function (res) {
+                    // TODO: Cambiar cuando se recuperen los datos.
+                    if (!res.success) {
+                        alert(res.message);
+                        // return;
+                    }
+                    // vm.allProducts = [{
+                    //     id: '1',
+                    //     nombre: 'Pera',
+                    //     precio: 4009,
+                    //     impuesto: 506
+                    // }, {
+                    //     id: '2',
+                    //     nombre: 'Sadia',
+                    //     precio: 2009,
+                    //     impuesto: 256
+                    // }];
+                    else {
+                        vm.allProducts = res.data;
+                    }
+
+                })
         };
         vm.get();
 
         vm.add = function add(pProduct) {
             console.log(pProduct);
             if (pProduct === undefined) {
-                alert('Datos inconsostentes');
+                alert('Datos inconsistentes');
                 return;
             }
             var data = {
@@ -43,14 +47,14 @@ var app = angular.module("sitioerp")
                 url: 'products'
             }).then(function (res) {
                 if (!res.success) {
-                    alert('No se pudieron insertar los datos');
+                    alert(res.message);
                     // return;
                 }
                 vm.get();
                 vm.product = {
                     id: undefined,
-                    name: undefined,
-                    tax: undefined
+                    nombre: undefined,
+                    impuesto: undefined
                 }
             })
         }
@@ -68,7 +72,7 @@ var app = angular.module("sitioerp")
                 url: 'products/'
             }).then(function (res) {
                 if (!res.success) {
-                    alert('No se pudieron eliminar los datos');
+                    alert(res.message);
                     return;
                 }
                 vm.get();
@@ -81,30 +85,30 @@ var app = angular.module("sitioerp")
                 params: '',
                 data: pProduct
             }, {
-                url: 'products'
-            }).then(function (res) {
-                if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
-                    return;
-                }
-                vm.get();
-            })
+                    url: 'products'
+                }).then(function (res) {
+                    if (!res.success) {
+                        alert(res.message);
+                        return;
+                    }
+                    vm.get();
+                })
         };
 
         vm.select = function select(pProduct) {
             vm.product = {
                 id: pProduct.id,
-                name: pProduct.name,
-                price: pProduct.price,
-                tax: pProduct.tax
+                nombre: pProduct.nombre,
+                precio: pProduct.precio,
+                impuesto: pProduct.impuesto
             };
         };
 
         vm.clearV = function clear() {
             vm.product = {
                 id: undefined,
-                name: undefined,
-                tax: undefined
+                nombre: undefined,
+                impuesto: undefined
             }
         };
     });

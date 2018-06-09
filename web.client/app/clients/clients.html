@@ -18,12 +18,12 @@
                                 <tr>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.name" placeholder="">
+                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.nombre" placeholder="">
                                         </div>
                                     </td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.idCard" placeholder="ejemplo: 101110111">
+                                            <input type="text" class="form-control form-control-sm" ng-model="clients.client.cedula" placeholder="ejemplo: 101110111">
                                             <small id="emailHelp" class="form-text text-muted">Si esta modificando no cambie la cédula</small>
                                         </div>
                                     </td>
@@ -35,11 +35,11 @@
                                     </td>
                                 </tr>
                                 <tr ng-repeat="customer in clients.allClients">
-                                    <td>{{customer.name}}</td>
-                                    <td>{{customer.idCard}}</td>
+                                    <td>{{customer.nombre}}</td>
+                                    <td>{{customer.cedula}}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-danger" ng-click="clients.delete(customer.idCard)">Eliminar</button>
+                                            <button type="button" class="btn btn-danger" ng-click="clients.delete(customer.cedula)">Eliminar</button>
                                             <button type="button" class="btn btn-secondary" ng-click="clients.select(customer)">Seleccionar</button>
                                         </div>
                                     </td>
