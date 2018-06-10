@@ -1,7 +1,6 @@
 var app = angular.module("sitioerp")
     .controller('InvoiceCtrl', function ($scope, requestService) {
         var vm = this;
-
         vm.taxes = 0;
         vm.subTotal = 0;
         vm.total = 0;
@@ -13,56 +12,44 @@ var app = angular.module("sitioerp")
                 params: '',
                 data: ''
             }, {
-                url: 'inventories'
-            }).then(function (res) {
-                // TODO: Cambiar cuando se recuperen los datos.
-                if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
-                    // return;
-                }
-                vm.allInventory = [{
-                        id: '1',
-                        name: 'Pera',
-                        quantity: 300,
-                        quantityMin: 2,
-                        quantityMax: 500,
-                        detail: 'Gravado'
-                    }, {
-                        id: '2',
-                        name: 'Sadia',
-                        quantity: 200,
-                        quantityMin: 10,
-                        quantityMax: 450,
-                        detail: 'Excento'
-                    },
-                    {
-                        id: '3',
-                        name: 'Banano',
-                        quantity: 200,
-                        quantityMin: 10,
-                        quantityMax: 450,
-                        detail: 'Gravado'
+                    url: 'invoices'
+                }).then(function (res) {
+                    if (!res.success) {
+                        alert('No se pudieron recuperar los datos.');
                     }
-                ];
-            })
+                    else {
+                        vm.allInvoices = res.data;
+                        vm.allProducts = requestService.allInventories;
+                        console.log(vm.allInvoices);
+                        console.log(requestService.allInventories);
+                    }
+
+                })
         };
         vm.get();
 
         vm.add = function add(pBill) {
-            pBill['detail'] = vm.detail;
-            pBill['taxes'] = vm.taxes;
-            pBill['subTotal'] = vm.subTotal;
-            pBill['total'] = vm.total;
-
-            console.log(pBill);
+            if (pBill == undefined || pBill.fecha == undefined || pBill.cliente == undefined) {
+                alert('Debe selecionar un cliente y una fecha')
+                return;
+            }
+            pBill['listaProductos'] = vm.detail;
+            pBill['impuestos'] = vm.taxes;
+            pBill['subtotal'] = vm.subTotal;
+            pBill['montoTotal'] = vm.total;
+            if (pBill.listaProductos.length == 0) {
+                alert('No hay productos asociados a la factura')
+                return
+            }
             var data = {
                 params: '',
                 data: pBill
             };
 
             requestService.postRequest(data, {
-                url: 'inventories'
+                url: 'invoices'
             }).then(function (res) {
+                console.log(res)
                 if (!res.success) {
                     alert('No se pudieron insertar los datos');
                     // return;
@@ -72,76 +59,74 @@ var app = angular.module("sitioerp")
         }
 
         vm.delete = function deleteN(pIndex) {
-            var temp = [];
-            for (let index = 0; index < vm.detail.length; index++) {
-                if (pIndex !== vm.detail[index].number) {
-                    temp.push(vm.detail[index]);
-                }
-            }
-            vm.detail = temp;
+            console.log(pIndex)
+            vm.taxes = vm.taxes - vm.detail[pIndex].impuesto;
+            vm.subTotal = vm.subTotal - (vm.detail[pIndex].precio * vm.detail[pIndex].cantidad);
+            vm.total = vm.taxes + vm.subTotal;
+            vm.detail.splice(pIndex, 1)
         };
 
-        vm.update = function update(pProduct) {
-            console.log(pProduct);
-            requestService.putRequest({
-                params: '',
-                data: pProduct
-            }, {
-                url: 'inventories'
+        vm.deleteF = function deleteF(pIdInvoice) {
+            console.log(pIdInvoice)
+            if (!confirm('Seguro de realizar esta acción?')) {
+                return;
+            }
+            var data = {
+                params: pIdInvoice,
+                data: ''
+            };
+            requestService.deleteRequest(data, {
+                url: 'invoices/'
             }).then(function (res) {
                 if (!res.success) {
-                    alert('No se pudieron recuperar los datos.');
+                    alert(res.message);
                     return;
                 }
                 vm.get();
             })
-        };
+        }
+
 
         vm.addDetail = function addDetail(pProduct) {
-            vm.getProduct();
+            for (var i = 0; i < vm.detail.length; i++) {
+                if (vm.detail[i].idProducto == pProduct.id) {
+                    alert('El producto ya fue insertado');
+                    return;
+                }
+            }
+            var flag = 0;
             for (var index = 0; index < vm.allProducts.length; index++) {
-                if (pProduct.id === vm.allProducts[index].id) {
-                    if (pProduct.quantity > vm.allProducts[index].quantityMin &&
-                        pProduct.quantity <= vm.allProducts[index].quantity) {
+                if (pProduct.id == vm.allProducts[index].producto) {
+                    flag = 1;
+                    if (pProduct.cantidad > vm.allProducts[index].cantidadMin &&
+                        pProduct.cantidad <= vm.allProducts[index].cantidad) {
                         vm.detail.push({
-                            idProduct: vm.allProducts[index].id,
-                            number: vm.detail.length + 1,
-                            name: vm.allProducts[index].name,
-                            quantity: pProduct.quantity,
-                            price: vm.allProducts[index].price
+                            idProducto: vm.allProducts[index].producto,
+                            nombre: vm.allProducts[index].nombre,
+                            cantidad: pProduct.cantidad,
+                            precio: vm.allProducts[index].precio,
+                            impuesto: vm.allProducts[index].impuesto
 
                         });
-                        vm.taxes = vm.taxes + vm.allProducts[index].tax;
-                        vm.subTotal = vm.subTotal + (vm.allProducts[index].price * pProduct.quantity);
+                        vm.taxes = vm.taxes + vm.allProducts[index].impuesto;
+                        vm.subTotal = vm.subTotal + (vm.allProducts[index].precio * pProduct.cantidad);
                         vm.total = vm.taxes + vm.subTotal;
+                        flag = 0;
                         return;
-                    } else {
+                    }
+                    else {
                         alert('La cantidad no corresponde');
                     }
-                };
+                }
+
             };
+            if (!flag) {
+                alert('El producto especificado no existe o no tiene un inventario asignado');
+            }
         };
 
-        vm.getProduct = function getProduct() {
-            requestService.getRequest({
-                params: '',
-                data: ''
-            }, {
-                url: 'products'
-            }).then(function (res) {
-                // vm.allProducts = res;
-                vm.allProducts = [{
-                    id: '1',
-                    name: 'Pera',
-                    price: 4009,
-                    tax: 506
-                }, {
-                    id: '2',
-                    name: 'Sadia',
-                    price: 2009,
-                    tax: 256
-                }];
-            })
-        };
-        vm.getProduct();
+
+
+
+
     });

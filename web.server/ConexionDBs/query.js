@@ -326,3 +326,100 @@ exports.eliminarInventario = function eliminarProducto(idRegistro, callback) {
         }
     })
 }
+
+
+/*
+    ----------------------------------------------------- Facturacion -----------------------------------------------------
+ */
+
+/**
+ * Obtener las facturas en la BD
+ * @param {*} callback Función para retorno del resultado de la operación
+ */
+exports.obtenerFacturas = function obtenerFacturas(callback) {
+    var request = new Request('ObtenerFacturas', function (err) {
+        console.log(err)
+        if (err) {
+            callback(requestError(err, request.error, 0));
+        }
+    });
+    request.addOutputParameter('success', TYPES.Bit);
+    sqlConect.callProcedure(request, callback)
+}
+
+/**
+ * Crea un nuevo inventario en la BD, solo un inventario por producto.
+ * @param {*} datos Atributos del nuevo producto: producto, cantidad, cantidadMin, cantidadMax, gravadoOExcepto
+ * @param {*} callback Función para retorno del resultado de la operación
+ */
+exports.crearFactura = function crearFactura(datos, callback) {
+    var request = new Request('CrearFactura', function (err) {
+        console.log(err)
+        if (err) {
+            callback(requestError(err, request.error, 0));
+        }
+    });
+    request.addParameter('cliente', TYPES.VarChar, datos.cliente);
+    request.addParameter('fecha', TYPES.VarChar, datos.fecha);
+    request.addParameter('montoTotal', TYPES.Int, datos.montoTotal);
+    request.addParameter('subtotal', TYPES.Int, datos.subtotal);
+    request.addParameter('impuestos', TYPES.Int, datos.impuestos);
+    request.addOutputParameter('success', TYPES.Bit);
+    sqlConect.callProcedure(request, function (resultado) {
+        if (resultado.success) {
+            // console.log(resultado)
+            // for (i in datos.listaProductos) {
+            //     var request = new Request('AsociarProductoAFactura', function (err) {
+            //         console.log(err)
+            //         if (err) {
+            //             callback(requestError(err, request.error, 0));
+            //         }
+            //     });
+            //     request.addParameter('idFactura', TYPES.Int, resultado.data[0].IdFactura);
+            //     request.addParameter('idProducto', TYPES.Int, datos.listaProductos[i].idProducto);
+            //     request.addParameter('cantidad', TYPES.Int, datos.listaProductos[i].cantidad);
+            //     request.addOutputParameter('success', TYPES.Bit);
+            //     sqlConect.callProcedure(request, function (resultado) {
+            //         if (!resultado.success) {
+            //             callback(requestError(resultado, request.error, 1));
+            //         }
+            //     })
+            // }
+            callback({
+                success: true,
+                title: "Success",
+                message: "La operación se realizó de manera exitosa.",
+                msgCode: 200
+            })
+        }
+        else {
+            callback(requestError(resultado, request.error, 1));
+        }
+    })
+}
+
+
+/**
+ * 
+ * @param {*} idRegistro Id del producto a eliminar
+ * @param {*} callback Función para retorno del resultado de la operación
+ */
+exports.deshabilitarFactura = function deshabilitarFactura(idRegistro, callback) {
+    var request = new Request('DeshabilitarFactura', function (err) {
+        console.log(err)
+        if (err) {
+            callback(requestError(err, request.error, 0))
+        }
+    });
+
+    request.addParameter('id', TYPES.VarChar, idRegistro);
+    request.addOutputParameter('success', TYPES.Bit);
+    sqlConect.callProcedure(request, function (resultado) {
+        if (resultado.success) {
+            callback(requestSuccess)
+        }
+        else {
+            callback(requestError(resultado, request.error, 1));
+        }
+    })
+}

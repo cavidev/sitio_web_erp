@@ -34,36 +34,14 @@ var app = angular.module("sitioerp")
                     }
                     else {
                         vm.allInventory = res.data
+                        requestService.allInventories = vm.allInventory;
                         for (element in vm.allInventory) {
                             vm.allInventory[element].gravadoOExcepto = vm.gravadoOExento(vm.allInventory[element].gravadoOExcepto);
+                            
                         }
 
                     }
-                    // vm.allInventory = [{
-                    //         id: '1',
-                    //         producto: '2',
-                    //         nombre: 'Pera',
-                    //         cantidad: 300,
-                    //         cantidadMin: 2,
-                    //         cantidadMax: 500,
-                    //         gravadoOExcepto: 'Gravado'
-                    //     }, {
-                    //         id: '2',
-                    //         nombre: 'Sadia',
-                    //         cantidad: 200,
-                    //         cantidadMin: 10,
-                    //         cantidadMax: 450,
-                    //         gravadoOExcepto: 'Excento'
-                    //     },
-                    //     {
-                    //         id: '3',
-                    //         nombre: 'Banano',
-                    //         cantidad: 200,
-                    //         cantidadMin: 10,
-                    //         cantidadMax: 450,
-                    //         gravadoOExcepto: 'Gravado'
-                    //     }
-                    // ];
+
 
                 })
         };
@@ -95,7 +73,6 @@ var app = angular.module("sitioerp")
         }
 
         vm.delete = function deleteN(pIdInventory) {
-            console.log(pIdInventory);
             if (!confirm('Seguro de realizar esta acción?')) {
                 return;
             }

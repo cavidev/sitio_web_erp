@@ -13,13 +13,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Encabezado</label>
-                            <input type="text" class="form-control form-control-sm" ng-model="invoice.bill.header" placeholder="">
+                            <input type="text" class="form-control form-control-sm" ng-model="invoice.bill.cliente" placeholder="">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="">Fecha</label>
-                            <input type="date" class="form-control form-control-sm" ng-model="invoice.bill.date" placeholder="">
+                            <input type="date" class="form-control form-control-sm" ng-model="invoice.bill.fecha" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,8 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Producto (id)</th>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nombre</th>
                                     <th scope="col">Cantidad</th>
                                     <th scope="col">Precio</th>
                                     <td scope="col">Acción</td>
@@ -62,15 +62,15 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td></td>
                                     <td>
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-sm" ng-model="invoice.product.id" placeholder="">
                                         </div>
                                     </td>
+                                    <td></td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="text" class="form-control form-control-sm" ng-model="invoice.product.quantity" placeholder="">
+                                            <input type="text" class="form-control form-control-sm" ng-model="invoice.product.cantidad" placeholder="">
                                         </div>
                                     </td>
                                     <td></td>
@@ -82,13 +82,13 @@
 
                                 </tr>
                                 <tr ng-repeat="product in invoice.detail">
-                                    <td>{{product.number}}</td>
-                                    <td>{{product.name}}</td>
-                                    <td>{{product.quantity}}</td>
-                                    <td>{{product.price}}</td>
+                                    <td>{{product.idProducto}}</td>
+                                    <td>{{product.nombre}}</td>
+                                    <td>{{product.cantidad}}</td>
+                                    <td>{{product.precio}}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-                                            <button type="button" class="btn btn-danger btn-sm" ng-click="invoice.delete(product.number)">Eliminar</button>
+                                            <button type="button" class="btn btn-danger btn-sm" ng-click="invoice.delete($index, product)">Eliminar</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -113,7 +113,34 @@
         <div class="card">
             <h5 class="card-header">Lista de facturas</h5>
             <div class="card-body">
-
+                <table class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Subtotal</th>
+                            <th scope="col">Impuestos</th>
+                            <th scope="col">Monto Total</th>
+                            <th scope="col">Acción</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="i in invoice.allInvoices">
+                            <td>{{i.id}}</td>
+                            <td>{{i.cliente}}</td>
+                            <td>{{i.fecha}}</td>
+                            <td>{{i.subtotal}}</td>
+                            <td>{{i.impuestos}}</td>
+                            <td>{{i.montoTotal}}</td>
+                            <td>
+                                <div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="invoice.deleteF(i.id)">Deshabilitar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

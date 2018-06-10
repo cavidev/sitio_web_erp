@@ -3,20 +3,20 @@ var logicaFacturacion = require('../Logica/logicaFacturacion.js');
 
 
 exports.crearFacturacion = function (rRequest, rResponse) {
-    logicaFacturacion.crearFacturacion(function (data) {
+    logicaFacturacion.crearFacturacion(rRequest, function (data) {
         rResponse.send(data);
     });
 };
 
-exports.obtenerFacturacion = function (rRequest, rResponse) {
-    logicaFacturacion.obtenerFacturacion(function (data) {
+exports.obtenerFacturaciones = function (rRequest, rResponse) {
+    logicaFacturacion.obtenerFacturaciones(function (data) {
         rResponse.send(data);
     });
 };
 
 
 exports.deshabilitarFacturacion = function (rRequest, rResponse) {
-    logicaFacturacion.deshabilitarFacturacion(function (data) {
+    logicaFacturacion.deshabilitarFacturacion(rRequest, function (data) {
         rResponse.send(data);
     });
 };

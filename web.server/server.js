@@ -48,6 +48,14 @@ app.get('/inventories', inventarioCtrl.obtenerInventarios);
 app.put('/inventories', inventarioCtrl.modificarInventario);
 app.delete('/inventories/:idInventory', inventarioCtrl.eliminarInventario);
 
+/**
+ * Endpoints Facturación
+ */
+
+app.post('/invoices', facturacionCtrl.crearFacturacion);
+app.get('/invoices', facturacionCtrl.obtenerFacturaciones);
+app.delete('/invoices/:idFactura', facturacionCtrl.deshabilitarFacturacion);
+
 // Levantar el servidor, puerto 9000.
 server.listen(port, function () {
     console.log('Servidor escuchando en el puerto: ' + port);

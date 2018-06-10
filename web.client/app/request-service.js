@@ -2,17 +2,22 @@
 angular.module('sitioerp')
 	.factory('requestService', function ($http) {
 
+
 		return {
+
+			allInventories: [],
+
+
 			getRequest: function (data, configs) {
 				return $http({
-						method: 'GET',
-						url: configs.url + data.params,
-						data: data.data
-					})
+					method: 'GET',
+					url: configs.url + data.params,
+					data: data.data
+				})
 					.then(function (response) {
-							return response.data;
+						return response.data;
 
-						},
+					},
 						function errorCallback(response) {
 							return {
 								success: false,
@@ -23,13 +28,13 @@ angular.module('sitioerp')
 
 			postRequest: function (data, configs) {
 				return $http({
-						method: 'POST',
-						url: configs.url + data.params,
-						data: data.data
-					})
+					method: 'POST',
+					url: configs.url + data.params,
+					data: data.data
+				})
 					.then(function (response) {
-							return response.data;
-						},
+						return response.data;
+					},
 						function errorCallback(response) {
 							return {
 								success: false,
@@ -40,13 +45,13 @@ angular.module('sitioerp')
 
 			putRequest: function (data, configs) {
 				return $http({
-						method: 'PUT',
-						url: configs.url + data.params,
-						data: data.data
-					})
+					method: 'PUT',
+					url: configs.url + data.params,
+					data: data.data
+				})
 					.then(function (response) {
-							return response.data;
-						},
+						return response.data;
+					},
 						function errorCallback(response) {
 							return {
 								success: false,
@@ -57,13 +62,13 @@ angular.module('sitioerp')
 
 			deleteRequest: function (data, configs) {
 				return $http({
-						method: 'DELETE',
-						url: configs.url + data.params,
-						data: data.data
-					})
+					method: 'DELETE',
+					url: configs.url + data.params,
+					data: data.data
+				})
 					.then(function (response) {
-							return response.data;
-						},
+						return response.data;
+					},
 						function errorCallback(response) {
 							return {
 								success: false,
